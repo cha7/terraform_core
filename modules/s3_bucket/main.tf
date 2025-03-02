@@ -8,7 +8,7 @@ module "s3_bucket" {
     }
 
     block_public_acls   = true
-    block_public_policy = true
+    block_public_policy = false
     restrict_public_buckets = false
     
     website = {
