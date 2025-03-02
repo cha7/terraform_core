@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-west-2"
-}
-
 module "api_gateway" {
 
   source  = "terraform-aws-modules/apigateway-v2/aws"

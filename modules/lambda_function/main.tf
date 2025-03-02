@@ -1,5 +1,6 @@
-provider "aws" {
-  region = "us-west-2"
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+  region = data.aws_region.current.name
 }
 
 module "lambda_function" {
@@ -11,7 +12,7 @@ module "lambda_function" {
   handler       = "run.sh"
   runtime       = "nodejs20.x"
   publish       = true
-  layers        = ["arn:aws:lambda:us-west-2:753240598075:layer:LambdaAdapterLayerX86:23"]
+  layers        = ["arn:aws:lambda:${local.region}:${local.account_id}:layer:LambdaAdapterLayerX86:23"]
   environment_variables = {
     PORT = "8000"
     AWS_LAMBDA_EXEC_WRAPPER = "/opt/bootstrap"
@@ -42,7 +43,7 @@ resource "null_resource" "always_run" {
 resource "null_resource" "s3_sync" {
     depends_on = [module.lambda_function.aws_lambda_function]
     provisioner "local-exec" {
-        command = "aws s3 sync ../public/ s3://test-app-390436884215-us-west-2-static/public/ && aws s3 sync ../.next/static/ s3://test-app-390436884215-us-west-2-static/_next/static/"
+        command = "aws s3 sync ../public/ s3://test-app-${local.account_id}-${local.region}-static/public/ && aws s3 sync ../.next/static/ s3://test-app-${local.account_id}-${local.region}-static/_next/static/"
     }
     
     lifecycle {
