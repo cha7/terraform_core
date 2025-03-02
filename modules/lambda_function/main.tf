@@ -12,7 +12,7 @@ module "lambda_function" {
   handler       = "run.sh"
   runtime       = "nodejs20.x"
   publish       = true
-  layers        = ["arn:aws:lambda:${local.region}:${local.account_id}:layer:LambdaAdapterLayerX86:23"]
+  layers        = ["arn:aws:lambda:${local.region}:753240598075:layer:LambdaAdapterLayerX86:23"]
   environment_variables = {
     PORT = "8000"
     AWS_LAMBDA_EXEC_WRAPPER = "/opt/bootstrap"
