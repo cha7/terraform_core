@@ -3,6 +3,14 @@ variable "input_region" {
   type = string
 }
 
+variable "application_name" {
+  type = string
+}
+
+variable "application_description" {
+  type = string
+}
+
 provider "aws" {
   region = var.input_region
   application_name = var.application_name
