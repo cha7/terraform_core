@@ -25,7 +25,7 @@ locals {
 
 module "lambda_function" {
     # Do not modify
-    source                          = "../../modules/lambda_function"
+    source                          = "./modules/lambda_function"
     lambda_function_name            = local.application_name
     lambda_function_description     = local.application_description
     apigatewayv2_api_execution_arn  = module.api_gateway.apigatewayv2_api_execution_arn
@@ -33,7 +33,7 @@ module "lambda_function" {
 
 module "api_gateway" {
     # Do not modify
-    source                          = "../../modules/api_gateway"
+    source                          = "./modules/api_gateway"
     lambda_function_arn             = module.lambda_function.lambda_function_arn
     api_gateway_name                = local.application_name
     api_gateway_description         = local.application_description
@@ -42,7 +42,7 @@ module "api_gateway" {
 
 module "s3_bucket" {
     # Do not modify
-    source                          = "../../modules/s3_bucket"
+    source                          = "./modules/s3_bucket"
     bucket_name                     = "${local.application_name}-${local.account_id}-${local.region}-static"
     api_id                          = module.api_gateway.api_id
 }
