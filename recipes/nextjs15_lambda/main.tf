@@ -1,5 +1,12 @@
-
 variable "input_region" {
+  type = string
+}
+
+variable "input_application_name" {
+  type = string
+}
+
+variable "input_application_description" {
   type = string
 }
 
@@ -8,18 +15,17 @@ provider "aws" {
 }
 
 locals {
-  application_name                  = var.application_name
-  application_description           = var.application_description
+  application_name                  = var.input_application_name
+  application_description           = var.input_application_description
 
   # Do not modify
   account_id                        = data.aws_caller_identity.current.account_id
   region                            = data.aws_region.current.name
 }
 
-
 module "lambda_function" {
     # Do not modify
-    source                          = "git::https://github.com/cha7/terraform_core//modules/lambda_function"
+    source                          = "../../modules/lambda_function"
     lambda_function_name            = local.application_name
     lambda_function_description     = local.application_description
     apigatewayv2_api_execution_arn  = module.api_gateway.apigatewayv2_api_execution_arn
@@ -27,7 +33,7 @@ module "lambda_function" {
 
 module "api_gateway" {
     # Do not modify
-    source                          = "git::https://github.com/cha7/terraform_core//modules/api_gateway"
+    source                          = "../../modules/api_gateway"
     lambda_function_arn             = module.lambda_function.lambda_function_arn
     api_gateway_name                = local.application_name
     api_gateway_description         = local.application_description
@@ -36,7 +42,7 @@ module "api_gateway" {
 
 module "s3_bucket" {
     # Do not modify
-    source                          = "git::https://github.com/cha7/terraform_core//modules/s3_bucket"
+    source                          = "../../modules/s3_bucket"
     bucket_name                     = "${local.application_name}-${local.account_id}-${local.region}-static"
     api_id                          = module.api_gateway.api_id
 }
