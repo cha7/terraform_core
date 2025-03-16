@@ -3,7 +3,7 @@
 
 source ./.env
 
-account-id=$(aws sts get-caller-identity --query Account --output text)
+awsAccountId=$(aws sts get-caller-identity --query Account --output text)
 
 echo "Found REGION: ${REGION}"
 echo "Found APP_NAME: ${APP_NAME}"
@@ -17,7 +17,7 @@ cp -r node_modules/terraform_core/recipes/nextjs15_lambda/* ./infra
 cd infra
 
 terraform init \
--backend-config="bucket=terraform-${account-id}-us-east-1" \
+-backend-config="bucket=terraform-${awsAccountId}-us-east-1" \
 -backend-config="key=${APP_NAME}/${REGION}" \
 -backend-config="region=${REGION}"
 
