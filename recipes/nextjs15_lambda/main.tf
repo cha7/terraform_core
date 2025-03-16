@@ -23,10 +23,12 @@ locals {
   region                            = data.aws_region.current.name
 }
 
-backend "s3" {
-  bucket                  = "terraform-${account_id}-us-east-1"
-  key                     = "${local.application_name}/${local.region}"
-  region                  = "us-east-1"
+terraform {
+  backend "s3" {
+    bucket                  = "terraform-${account_id}-us-east-1"
+    key                     = "${local.application_name}/${local.region}"
+    region                  = "us-east-1"
+  }
 }
 
 module "lambda_function" {
