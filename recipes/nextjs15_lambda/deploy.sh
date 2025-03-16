@@ -1,5 +1,5 @@
 
-#!/bin/bash
+#!/bin/sh
 
 source ./.env
 
