@@ -1,5 +1,7 @@
 
-#!/bin/bash 
+#!/bin/bash
+
+source .env
 
 rm -rf infra
 mkdir infra
