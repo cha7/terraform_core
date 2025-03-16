@@ -1,3 +1,7 @@
+locals {
+  region = data.aws_region.current.name
+}
+
 module "s3_bucket" {
     source = "terraform-aws-modules/s3-bucket/aws"
 
@@ -52,7 +56,7 @@ resource "null_resource" "always_run" {
 resource "null_resource" "s3_sync" {
     depends_on = [module.lambda_function.aws_lambda_function]
     provisioner "local-exec" {
-        command = "aws s3 sync ./../public/ s3://${var.bucket_name}/public/ --region ${local.region} && aws s3 sync ./../.next/static/ s3://${var.lambda_function_name}-${local.account_id}-${local.region}-static/_next/static/ --region ${local.region}"
+        command = "aws s3 sync ./../public/ s3://${var.bucket_name}/public/ --region ${local.region} && aws s3 sync ./../.next/static/ s3://${var.bucket_name}/_next/static/ --region ${local.region}"
     }
     
     lifecycle {
@@ -60,4 +64,10 @@ resource "null_resource" "s3_sync" {
         null_resource.always_run
       ]
     }
+}
+
+data "aws_region" "current" {}
+
+output "region" {
+  value = data.aws_region.current.name
 }
