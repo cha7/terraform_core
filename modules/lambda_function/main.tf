@@ -35,24 +35,6 @@ module "lambda_function" {
   }
 }
 
-resource "null_resource" "always_run" {
-  triggers = {
-    timestamp = "${timestamp()}"
-  }
-}
-resource "null_resource" "s3_sync" {
-    depends_on = [module.lambda_function.aws_lambda_function]
-    provisioner "local-exec" {
-        command = "aws s3 sync ./../public/ s3://${var.lambda_function_name}-${local.account_id}-${local.region}-static/public/ --region ${local.region} && aws s3 sync ./../.next/static/ s3://${var.lambda_function_name}-${local.account_id}-${local.region}-static/_next/static/ --region ${local.region}"
-    }
-    
-    lifecycle {
-      replace_triggered_by = [
-        null_resource.always_run
-      ]
-    }
-}
-
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
