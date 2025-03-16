@@ -1,7 +1,11 @@
 
 #!/bin/bash
 
-source .env
+source ./.env
+
+echo "Found REGION: ${REGION}"
+echo "Found APP_NAME: ${APP_NAME}"
+echo "Found APP_DESCRIPTION: ${APP_DESCRIPTION}"
 
 rm -rf infra
 mkdir infra
