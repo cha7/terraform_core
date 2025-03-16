@@ -54,7 +54,7 @@ resource "null_resource" "always_run" {
 }
 
 resource "null_resource" "s3_sync" {
-    depends_on = [module.lambda_function.aws_lambda_function]
+    depends_on = [module.s3_bucket.aws_lambda_function]
     provisioner "local-exec" {
         command = "aws s3 sync ./../public/ s3://${var.bucket_name}/public/ --region ${local.region} && aws s3 sync ./../.next/static/ s3://${var.bucket_name}/_next/static/ --region ${local.region}"
     }
