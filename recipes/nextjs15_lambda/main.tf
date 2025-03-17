@@ -19,8 +19,6 @@ locals {
   application_description           = var.input_application_description
   account_id                        = data.aws_caller_identity.current.account_id
   region                            = data.aws_region.current.name
-  security_group_list               = data.aws_ssm_parameter.security_group_list.value
-  subnet_list                       = data.aws_ssm_parameter.subnet_list.value
 }
 
 terraform {
