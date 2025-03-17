@@ -21,6 +21,6 @@ terraform init \
 -backend-config="key=${APP_NAME}/${REGION}" \
 -backend-config="region=${REGION}"
 
-terraform apply -var input_region=${REGION} \
+terraform destroy -var input_region=${REGION} \
 -var input_application_name=${APP_NAME} \
 -var input_application_description=${APP_DESCRIPTION} --auto-approve
