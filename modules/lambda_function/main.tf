@@ -1,6 +1,8 @@
 locals {
   account_id = data.aws_caller_identity.current.account_id
   region = data.aws_region.current.name
+  security-group-list = data.aws_ssm_parameter.security-group-list.name
+  subnet-list = data.aws_ssm_parameter.subnet-list.subnet-list.name
 }
 
 variable "security-group-list" {
@@ -28,8 +30,8 @@ module "lambda_function" {
   publish       = true
   layers        = ["arn:aws:lambda:${local.region}:753240598075:layer:LambdaAdapterLayerX86:23"]
 
-  vpc_subnet_ids         = var.subnet-list
-  vpc_security_group_ids = [var.security-group-list]
+  vpc_subnet_ids         = local.subnet-list
+  vpc_security_group_ids = [local.security-group-list]
   attach_network_policy = true
   
   environment_variables = {
