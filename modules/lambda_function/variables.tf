@@ -7,5 +7,13 @@ variable "lambda_function_name" {
 }
 
 variable "lambda_function_description" {
-  description = "The name of the Lambda Function"
+  description = "The description of the Lambda Function"
+}
+
+variable "subnet_list" {
+  description = "The subnet list of the Lambda Function"
+}
+
+variable "security_group_list" {
+  description = "The SG list of the Lambda Function"
 }

@@ -10,11 +10,11 @@ variable "input_application_description" {
   type = string
 }
 
-variable "security-group-list" {
+variable "security_group_list" {
   type = string
  }
 
-variable "subnet-list" {
+variable "subnet_list" {
   type = string
  }
 
@@ -27,8 +27,8 @@ locals {
   application_description           = var.input_application_description
   account_id                        = data.aws_caller_identity.current.account_id
   region                            = data.aws_region.current.name
-  security-group-list               = data.aws_ssm_parameter.security-group-list.value
-  subnet-list                       = data.aws_ssm_parameter.subnet-list.value
+  security_group_list               = data.aws_ssm_parameter.security_group_list.value
+  subnet_list                       = data.aws_ssm_parameter.subnet_list.value
 }
 
 terraform {
@@ -44,8 +44,8 @@ module "lambda_function" {
     source                          = "./modules/lambda_function"
     lambda_function_name            = local.application_name
     lambda_function_description     = local.application_description
-    subnet-list                     = local.subnet-list  
-    security-group-list             = local.security-group-list
+    subnet_list                     = local.subnet_list  
+    security_group_list             = local.security_group_list
     apigatewayv2_api_execution_arn  = module.api_gateway.apigatewayv2_api_execution_arn
 }
 
@@ -65,12 +65,12 @@ module "s3_bucket" {
     api_id                          = module.api_gateway.api_id
 }
 
-data "aws_ssm_parameter" "security-group-list" {
-  name = var.security-group-list
+data "aws_ssm_parameter" "security_group_list" {
+  name = var.security_group_list
 }
 
-data "aws_ssm_parameter" "subnet-list" {
-  name = var.subnet-list
+data "aws_ssm_parameter" "subnet_list" {
+  name = var.subnet_list
 }
 
 data "aws_caller_identity" "current" {}
