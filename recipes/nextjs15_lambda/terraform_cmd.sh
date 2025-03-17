@@ -3,6 +3,17 @@
 
 source ./.env.infra
 
+if [[ -z $1 ]] 
+then
+tfcommand="apply"
+elif [[ $1 != "apply" && $1 != "destroy" ]]
+then
+echo "TF command only supports 'apply' and 'destroy'"
+exit 1
+else
+tfcommand=$1
+fi
+
 awsAccountId=$(aws sts get-caller-identity --query Account --output text)
 
 echo "Found REGION: ${REGION}"
@@ -21,6 +32,6 @@ terraform init \
 -backend-config="key=${APP_NAME}/${REGION}" \
 -backend-config="region=${REGION}"
 
-terraform apply -var input_region=${REGION} \
+terraform ${tfcommand} -var input_region=${REGION} \
 -var input_application_name=${APP_NAME} \
 -var input_application_description=${APP_DESCRIPTION} --auto-approve
