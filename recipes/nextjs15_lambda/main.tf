@@ -10,14 +10,6 @@ variable "input_application_description" {
   type = string
 }
 
-variable "security_group_list" {
-  type = string
- }
-
-variable "subnet_list" {
-  type = string
- }
-
 provider "aws" {
   region = var.input_region
 }
@@ -63,14 +55,6 @@ module "s3_bucket" {
     source                          = "./modules/s3_bucket"
     bucket_name                     = "${local.application_name}-${local.account_id}-${local.region}-static"
     api_id                          = module.api_gateway.api_id
-}
-
-data "aws_ssm_parameter" "security_group_list" {
-  name = var.security_group_list
-}
-
-data "aws_ssm_parameter" "subnet_list" {
-  name = var.subnet_list
 }
 
 data "aws_caller_identity" "current" {}
