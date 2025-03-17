@@ -49,11 +49,11 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 data "aws_ssm_parameter" "security_group_list" {
-  name = "subnet-list"
+  name = "security-group-list"
 }
 
 data "aws_ssm_parameter" "subnet_list" {
-  name = "security-group-list"
+  name = "subnet-list"
 }
 
 output "account_id" {
