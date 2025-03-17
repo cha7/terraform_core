@@ -7,6 +7,7 @@ locals {
 }
 
 module "lambda_function" {
+  depends_on = [data.aws_ssm_parameter.security_group_list, data.aws_ssm_parameter.subnet_list]
   source  = "terraform-aws-modules/lambda/aws"
   version = "~> 4.0"
 
