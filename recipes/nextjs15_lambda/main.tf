@@ -23,9 +23,9 @@ locals {
 
 terraform {
   backend "s3" {
-    bucket                  = "terraform-${account_id}-us-east-1"
-    key                     = "${local.application_name}/${local.region}"
-    region                  = "us-east-1"
+    bucket                          = "terraform-${account_id}-us-east-1"
+    key                             = "${local.application_name}/${local.region}"
+    region                          = "us-east-1"
   }
 }
 
