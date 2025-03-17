@@ -37,6 +37,8 @@ module "lambda_function" {
     lambda_function_name            = local.application_name
     lambda_function_description     = local.application_description
     apigatewayv2_api_execution_arn  = module.api_gateway.apigatewayv2_api_execution_arn
+    subnet-list                     = data.aws_ssm_parameter.subnet-list.value
+    security-group-list             = data.aws_ssm_parameter.security-group-list.value
 }
 
 module "api_gateway" {
@@ -56,8 +58,22 @@ module "s3_bucket" {
 }
 
 
+variable "security-group-list" {
+ }
+
+variable "subnet-list" {
+ }
+
+data "aws_ssm_parameter" "security-group-list" {
+  name = var.security-group-list
+}
+
+data "aws_ssm_parameter" "subnet-list" {
+  name = var.subnet-list
+}
 
 data "aws_caller_identity" "current" {}
+
 data "aws_region" "current" {}
 
 output "account_id" {
