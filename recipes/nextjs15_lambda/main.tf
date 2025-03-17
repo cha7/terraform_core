@@ -36,8 +36,6 @@ module "lambda_function" {
     source                          = "./modules/lambda_function"
     lambda_function_name            = local.application_name
     lambda_function_description     = local.application_description
-    subnet_list                     = local.subnet_list  
-    security_group_list             = local.security_group_list
     apigatewayv2_api_execution_arn  = module.api_gateway.apigatewayv2_api_execution_arn
 }
 
