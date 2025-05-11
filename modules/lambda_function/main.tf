@@ -20,9 +20,27 @@ module "lambda_function" {
 
   vpc_security_group_ids = [local.security_group_list[0]]
   vpc_subnet_ids         = [local.subnet_list[0], local.subnet_list[1]]
-  attach_network_policy = true
+  attach_network_policy  = true
 
   role_permissions_boundary = "arn:aws:iam::${local.account_id}:policy/test-boundary"
+  
+  policy_json = {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateNetworkInterface",
+                "sns:Publish",
+                "secretsmanager:GetSecretValue",
+                "ecs:RunTask",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DeleteNetworkInterface"
+            ],
+            "Resource": "*"
+        }
+    ]
+  }
   
   environment_variables = {
     PORT = "8000"
