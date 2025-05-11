@@ -21,7 +21,7 @@ module "api_gateway" {
   routes = {
     "ANY /" = {
       integration = {
-        uri             = var.lambda_function_arn
+        uri             = "${var.lambda_function_arn}:stable"
         payload_format_version = "2.0"
       }
     }
