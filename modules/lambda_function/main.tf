@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_lambda_alias" "stable" {
-  depends_on = [lambda_function]
+  depends_on = [module.lambda_function]
   name             = "stable"
   description      = "stable version"
   function_name    = module.lambda_function.lambda_function_qualified_arn
