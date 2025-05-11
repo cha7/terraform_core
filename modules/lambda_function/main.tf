@@ -24,7 +24,8 @@ module "lambda_function" {
 
   role_permissions_boundary = "arn:aws:iam::${local.account_id}:policy/test-boundary"
   
-  policy_json = jsonencode({
+  attach_policy_json     = true
+  policy_json            = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
         {
