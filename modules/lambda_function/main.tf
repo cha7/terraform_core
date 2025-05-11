@@ -21,6 +21,8 @@ module "lambda_function" {
   vpc_security_group_ids = [local.security_group_list[0]]
   vpc_subnet_ids         = [local.subnet_list[0], local.subnet_list[1]]
   attach_network_policy = true
+
+  role_permissions_boundary = "arn:aws:iam::${local.account_id}:policy/test-boundary"
   
   environment_variables = {
     PORT = "8000"
