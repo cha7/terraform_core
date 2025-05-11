@@ -10,7 +10,7 @@ resource "aws_lambda_alias" "stable" {
   depends_on = [module.lambda_function]
   name             = "stable"
   description      = "stable version"
-  function_name    = module.lambda_function.lambda_function_qualified_arn
+  function_name    = var.lambda_function_name
   function_version = module.lambda_function.lambda_function_version
   
 }
