@@ -24,7 +24,7 @@ module "lambda_function" {
 
   role_permissions_boundary = "arn:aws:iam::${local.account_id}:policy/test-boundary"
   
-  policy_json = {
+  policy_json = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -40,7 +40,7 @@ module "lambda_function" {
             "Resource": "*"
         }
     ]
-  }
+  })
   
   environment_variables = {
     PORT = "8000"
